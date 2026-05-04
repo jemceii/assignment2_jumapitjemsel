@@ -1,11 +1,8 @@
 require("./utils.js");
 require("dotenv").config();
-
 const express = require("express");
 const session = require("express-session");
-
 const MongoStore = require("connect-mongo").MongoStore;
-
 const bcrypt = require("bcrypt");
 const saltRounds = 12;
 
@@ -14,8 +11,10 @@ const app = express();
 const Joi = require("joi");
 
 const PORT = process.env.PORT || 3000;
-const expireTime = 3600000;
+
+const expireTime = 1 * 60 * 60 * 1000;
 // Expire time 1 hour in milliseconds
+// hours * minutes * seconds * milliseconds
 
 // Secret Information
 const mongodb_host = process.env.MONGODB_HOST;
@@ -33,16 +32,6 @@ const userCollection = database.db(mongodb_user_database).collection("users");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use((req, _res, next) => {
-  Object.defineProperty(req, "query", {
-    ...Object.getOwnPropertyDescriptor(req, "query"),
-    value: req.query,
-    writable: true,
-  });
-
-  next();
-});
-
 var mongoStore = MongoStore.create({
   mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_session_database}`,
   crypto: {
@@ -53,7 +42,7 @@ var mongoStore = MongoStore.create({
 app.use(
   session({
     secret: node_session_secret,
-    store: mongoStore, //default is memory store
+    store: mongoStore,
     saveUninitialized: false,
     resave: true,
   }),
