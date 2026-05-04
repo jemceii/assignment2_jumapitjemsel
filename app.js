@@ -24,7 +24,6 @@ const mongodb_password = process.env.MONGODB_PASSWORD;
 const mongodb_user_database = process.env.MONGODB_USER_DATABASE;
 const mongodb_session_database = process.env.MONGODB_SESSION_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
-
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 //
 
