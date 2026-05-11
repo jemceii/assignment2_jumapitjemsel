@@ -1,0 +1,32 @@
+<%- include('templates/header.ejs') %>
+
+<% if (!errorMessage) { %>
+<form action="/signupSubmit" method="post" style="padding-left: 5vw; padding-right: 5vw;">
+  <h1 class="h3 mb-4 fw-normal text-center">Create account</h1>
+
+  <div class="form-floating mb-3">
+    <input name="username" type="text" class="form-control" id="floatingUsername" placeholder="username">
+    <label for="floatingUsername">Username</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input name="email" type="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
+    <label for="floatingEmail">Email address</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+    <label for="floatingPassword">Password</label>
+  </div>
+
+  <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>
+</form>
+<% } else { %>
+  <div class="bg-body-tertiary p-5 rounded text-center" style="max-width: 480px; width: 100%; justify-self: center;">
+    <p class="lead"><%= errorMessage %></p>
+    <a class="btn btn-lg btn-primary" href="/signup" role="button">Try again »</a>
+  </div>
+<% } %>
+
+
+<%- include('templates/footer.ejs') %>

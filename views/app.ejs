@@ -1,0 +1,18 @@
+<%- include('templates/header.ejs') %>
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60vh;">
+  <div style="width: 200px;">
+    <% if (allowed) { %>
+        <h1 style="text-align: center;">Hello, <%= user %>.</h1>
+        <div style="padding-top: 5vh;">
+          <a class="btn btn-primary w-100 mt-2" href="/members">Go to Members Area</a>
+        <a class="btn btn-outline-secondary w-100 mt-2" href="/logout">Logout</a>
+        </div>
+    <% } else { %>
+        <a class="btn btn-primary w-100 mt-2" href="/signup">Sign up</a>
+        <a class="btn btn-outline-secondary w-100 mt-2" href="/login">Log in</a>
+    <% } %>
+  </div>
+</div>
+
+<%- include('templates/footer.ejs') %>

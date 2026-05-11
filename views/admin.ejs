@@ -1,0 +1,15 @@
+<%- include('templates/header.ejs') %>
+
+<% if (!errorMessage) { %> 
+    <div style="padding-left: 5vw;">
+    <h1>Users</h1>
+    <% for (let i = 0; i < users.length; i++) { %>
+        <%- include('templates/user.ejs', { user: users[i].username, userType: users[i].userType }) %>
+    <% } %>
+    </div>
+<% } else { %>
+    <p style="justify-self: center;"><%= errorMessage %></p>
+<% } %>
+
+
+<%- include('templates/footer.ejs') %>

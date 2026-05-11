@@ -1,0 +1,25 @@
+<%- include('templates/header.ejs') %>
+
+<h1 style="justify-self: center">Hello, <%= user %>.</h1>
+<br />
+<div class="container-fluid">
+  <div class="row mb-3 text-center">
+    <div class="col-sm-4 themed-grid-col">
+      <img src="/cat1.gif" alt="catgif" class="img-fluid" />
+    </div>
+    <div class="col-sm-4 themed-grid-col">
+      <img src="/cat2.gif" alt="catgif" class="img-fluid" />
+    </div>
+    <div class="col-sm-4 themed-grid-col">
+      <img src="/cat3.gif" alt="catgif" class="img-fluid" />
+    </div>
+  </div>
+</div>
+<br />
+<form action="/logout" method="get" style="justify-self: center;">
+  <button class="btn btn-outline-secondary d-inline-flex align-items-center">
+    Sign out
+  </button>
+</form>
+
+<%- include('templates/footer.ejs') %>
