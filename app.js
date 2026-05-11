@@ -102,25 +102,36 @@ app.get("/admin", isLoggedIn, isAdmin, async (req, res) => {
   res.render("admin", { title: "Admin Page", users, errorMessage: null });
 });
 
-app.get("/demote", isAdmin, (req, res) => {
-  const username = req.session.username;
-
-  userCollection.updateOne(
-    { username: username },
-    { $set: { userType: "user" } },
+app.get("/demoteUser", isAdmin, async (req, res) => {
+  const email = req.query.email;
+  const schema = Joi.string().email().required();
+  const validationResult = schema.validate(email);
+  if (validationResult.error != null) {
+    res.redirect("/admin");
+    return;
+  }
+  
+  await userCollection.updateOne(
+    { email: email },
+    { $set: { userType: "user" } }
   );
-
   res.redirect("/admin");
 });
 
-app.get("/promote", isAdmin, (req, res) => {
-  const username = req.session.username;
+app.get("/promoteUser", isAdmin, async (req, res) => {
+  const email = req.query.email;
 
-  userCollection.updateOne(
-    { username: username },
-    { $set: { userType: "admin" } },
+  const schema = Joi.string().email().required();
+  const validationResult = schema.validate(email);
+  if (validationResult.error != null) {
+    res.redirect("/admin");
+    return;
+  }
+
+  await userCollection.updateOne(
+    { email: email },
+    { $set: { userType: "admin" } }
   );
-
   res.redirect("/admin");
 });
 
