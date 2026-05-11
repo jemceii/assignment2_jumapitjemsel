@@ -60,7 +60,7 @@ const isLoggedIn = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (req.session && req.session.userType === "admin") {
+  if (req.session && req.session.user_type === "admin") {
     return next();
   }
   res.status(403).render("admin", {
@@ -113,7 +113,7 @@ app.get("/demoteUser", isAdmin, async (req, res) => {
   
   await userCollection.updateOne(
     { email: email },
-    { $set: { userType: "user" } }
+    { $set: { user_type: "user" } }
   );
   res.redirect("/admin");
 });
@@ -130,7 +130,7 @@ app.get("/promoteUser", isAdmin, async (req, res) => {
 
   await userCollection.updateOne(
     { email: email },
-    { $set: { userType: "admin" } }
+    { $set: { user_type: "admin" } }
   );
   res.redirect("/admin");
 });
@@ -191,12 +191,12 @@ app.post("/signupSubmit", async (req, res) => {
     username,
     email,
     password: hashedPassword,
-    userType: "user",
+    user_type: "user",
   });
 
   req.session.authenticated = true;
   req.session.username = username;
-  req.session.userType = "user";
+  req.session.user_type = "user";
   req.session.cookie.maxAge = expireTime;
   res.redirect("/members");
 });
@@ -242,7 +242,7 @@ app.post("/loginSubmit", async (req, res) => {
     req.session.authenticated = true;
     req.session.username = userResult.username;
     req.session.cookie.maxAge = expireTime;
-    req.session.userType = userResult.userType;
+    req.session.user_type = userResult.user_type;
     res.redirect("/members");
   } else {
     res.render("login", {
