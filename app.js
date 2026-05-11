@@ -10,7 +10,7 @@ const app = express();
 
 const Joi = require("joi");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3018;
 
 const expireTime = 1 * 60 * 60 * 1000;
 // Expire time 1 hour in milliseconds
@@ -20,20 +20,19 @@ const expireTime = 1 * 60 * 60 * 1000;
 const mongodb_host = process.env.MONGODB_HOST;
 const mongodb_user = process.env.MONGODB_USER;
 const mongodb_password = process.env.MONGODB_PASSWORD;
-const mongodb_user_database = process.env.MONGODB_USER_DATABASE;
-const mongodb_session_database = process.env.MONGODB_SESSION_DATABASE;
+const mongodb_database = process.env.MONGODB_DATABASE;
 const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 const node_session_secret = process.env.NODE_SESSION_SECRET;
 //
 
 const { database } = include("databaseConnection");
-const userCollection = database.db(mongodb_user_database).collection("users");
+const userCollection = database.db(mongodb_database).collection("users");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 var mongoStore = MongoStore.create({
-  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_session_database}`,
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/${mongodb_database}`,
   crypto: {
     secret: mongodb_session_secret,
   },
